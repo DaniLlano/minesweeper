@@ -14,9 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // create an empty array for the remain squares
         const emptyArray = Array(width*width - bombAmount).fill('valid')
         // join the arrays
-        const gameArray = emptyArray.concat(bombsArray)
+        const gameArray = bombsArray.concat(emptyArray)
         // and shuffle
-        const shuffledArray = gameArray.sort(() => Math.random() -0.5)
+        const shuffledArray = gameArray.sort(() => Math.random() -0.4)
         console.log(shuffledArray)
         
 
@@ -31,6 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
             grid.appendChild(square)
             // push the squares inside the array
             squares.push(square)
+
+            // normal click
+            square.addEventListener('click', function(e) {
+                click(square)
+            })
         }
 
         // add numbers
@@ -44,10 +49,31 @@ document.addEventListener('DOMContentLoaded', () => {
             // if the square contains a class of 'valid'
             if (squares[i].classList.contains('valid')) {
                 // if i is bigger than 0 && is not at the left edge && has a bomb at the left
+                // add 1 to total
                 if (i > 0 && !isLeftEdge && squares[i -1].classList.contains('bomb')) total++
                 // if i is larger than 9 && is not at the right edge
-                // && the square in the index +1 has a bomb
+                // && the square in the index +1 has a bomb, add 1 to total
                 if (i > 9 && !isRightEdge && squares[i +1 -width].classList.contains('bomb')) total++
+                // if i is larger than 10 && the square above it has a bomb, add 1 to total
+                if (i > 10 && squares[i -width].classList.contains('bomb')) total++
+                // if i is bigger than 11 && is not at the left edge && the square directly to the left
+                // && one up, add 1 to total
+                if (i > 11 && !isLeftEdge && squares[i -1 -width].classList.contains('bomb')) total++
+                // if i is smaller than 98 && is not at the right edge
+                // && the square at the right has a bomb, add 1 to total
+                if (i < 98 && !isRightEdge && squares[i +1].classList.contains('bomb')) total++
+                // if i is smaller than 90 && is not at the left edge &&
+                // the square at the left and above has a bomb, add 1 to total
+                if (i < 90 && !isLeftEdge && squares[i -1 +width].classList.contains('bomb')) total++
+                // if i is smaller than 88 && is not at the right edge &&
+                // the square at the right and above has a bomb, add q to total
+                if (i < 88 && !isRightEdge && squares[i +1 +width].classList.contains('bomb')) total++
+                // if i is smaller than 89 && the square above contains a bomb, add 1 to total
+                if (i < 89 && squares[i +width].classList.contains('bomb')) total++
+
+                // get the square we're checking and set attributes with the total
+                squares[i].setAttribute('data', total)
+                console.log(squares)
             }
         }
 
@@ -55,6 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
     createBoard()
+
+    // click on square actions
+    function click(square) {
+        if (square.classList.contains('bomb')) {
+            alert('game over')
+        }
+    }
 
 
 })
