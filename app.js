@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // if the number is divisible by the width and the remainder is 0
             const isLeftEdge = (i % width === 0)
             // if its divisible by the width and the remainder is 9
-            const isRightEdge = (i % width === -1)
+            const isRightEdge = (i % width === width -1)
 
             // if the square contains a class of 'valid'
             if (squares[i].classList.contains('valid')) {

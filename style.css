@@ -5,16 +5,24 @@
 }
 
 .grid {
-    height: 400px;
-    width: 400px;
+    height: 410px;
+    width: 410px;
     display: flex;
     flex-wrap: wrap;
     background-color: gray;
+    gap: 1px;
 }
 
 .grid div {
     height: 40px;
     width: 40px;
+    background: #c0c0c0;
+    border: solid #808080;
+    border-width: 0 1px 1px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .checked {
